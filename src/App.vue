@@ -1,29 +1,28 @@
 <template>
   <h1>Peek-a-Vue</h1>
   <section class="game-board">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
+    <GameCard v-for="(card, index) in cardList" :key="`GameCard-${index}`" :value="card" />
   </section>
 </template>
 
 <script>
+import GameCard from "@/components/GameCard"
 
 export default {
   name: 'App',
+  components: {
+    GameCard,
+  },
+  setup() {
+    let cardList = [];
+
+    for (let i = 0; i < 16; i++) {
+      cardList.push(i);
+    }
+
+    return { cardList };
+  }
+
 }
 </script>
 
@@ -35,10 +34,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-.card {
-  border: 5px solid #ccc
 }
 
 .game-board {
