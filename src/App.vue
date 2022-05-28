@@ -1,11 +1,12 @@
 <template>
   <h1>Peek-a-Vue</h1>
   <section class="game-board">
-    <GameCard v-for="(card, index) in cardList" :key="`GameCard-${index}`" :value="card" />
+    <GameCard v-for="(card, index) in cardList" :key="`GameCard-${index}`" :value="card.value" :visible="card.visible" :position="card.position" @select-card="flipCard" />
   </section>
 </template>
 
 <script>
+import { ref } from 'vue';
 import GameCard from "@/components/GameCard"
 
 export default {
@@ -14,13 +15,25 @@ export default {
     GameCard,
   },
   setup() {
-    let cardList = [];
+    let cardList = ref([]);
 
     for (let i = 0; i < 16; i++) {
-      cardList.push(i);
+      cardList.value.push({
+        value: i,
+        visible: false,
+        position: i,
+      });
     }
 
-    return { cardList };
+    const flipCard = (payload) => {
+      cardList.value[payload.position].visible = true;
+    }
+
+
+    return {
+      cardList,
+      flipCard,
+    };
   }
 
 }
