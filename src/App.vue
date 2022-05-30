@@ -189,6 +189,7 @@ body {
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
+  cursor: pointer;
 }
 
 .restart-game:hover {

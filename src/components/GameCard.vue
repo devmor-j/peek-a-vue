@@ -35,7 +35,7 @@ export default {
 </script>
 
 <template>
-  <div class="card" @click="selectCard">
+  <div class="card" @click="selectCard" :style="{ cursor: matched ? 'not-allowed' : 'pointer' }">
 
     <div v-if="visible" class="card-face is-front">
       <img :src="`/images/${value}.png`" :alt="value">
