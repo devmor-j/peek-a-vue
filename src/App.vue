@@ -4,7 +4,7 @@
     <GameCard v-for="(card, index) in cardList" :key="`GameCard-${index}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="shuffleCards">Shuffle cards</button>
+  <button @click="restartGame">Restart game</button>
 </template>
 
 <script>
@@ -92,12 +92,26 @@ export default {
       cardList.value = shuffle(cardList.value);
     }
 
+    function restartGame() {
+      shuffleCards();
+
+      cardList.value = cardList.value.map((card, index) => {
+        return {
+          ...card,
+          position: index,
+          matched: false,
+          visible: false,
+        }
+      })
+    }
+
     return {
       cardList,
       flipCard,
       userSelection,
       status,
       shuffleCards,
+      restartGame,
     };
   }
 
