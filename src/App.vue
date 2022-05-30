@@ -128,13 +128,21 @@ export default {
 </script>
 
 <style>
+body {
+  margin: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 60px;
+  height: calc(100vh - 60px);
+  background-image: url("/public/images/page-bg.png");
+  background-color: #00060c;
+  color: white;
 }
 
 .game-board {
