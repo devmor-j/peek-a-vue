@@ -163,7 +163,7 @@ body {
   grid-auto-rows: 7rem;
   gap: 1.25rem;
   justify-content: center;
-  padding-top: 2rem;
+  padding-block: 2rem;
 }
 
 .visually-hidden:not(:focus):not(:active) {
