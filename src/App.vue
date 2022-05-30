@@ -34,8 +34,10 @@ export default {
 
       // if user has selected one card add next selection
       if (userSelection.value[0] ?? false) {
+        // set the last (2/2) card to user's choices
         userSelection.value[1] = payload;
       } else {
+        // set the first (1/2) card to user's choices
         userSelection.value[0] = payload;
       }
     }
