@@ -17,6 +17,7 @@
 
 <script>
 import shuffle from 'lodash/shuffle';
+import { basicCannon } from './utilities/confetti';
 import { ref, watch, computed } from 'vue';
 import GameCard from "@/components/GameCard"
 
@@ -34,6 +35,7 @@ export default {
       let statusMessage;
       if (remainingPairs.value === 0) {
         statusMessage = 'Player wins!'
+        basicCannon();
       } else {
         statusMessage = `Remaining pairs: ${remainingPairs.value}`
       }
