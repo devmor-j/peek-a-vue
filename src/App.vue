@@ -102,7 +102,7 @@ export default {
 
           new Promise((res) => setTimeout(() => {
             res();
-          }, 300))
+          }, 500))
             .then(() => {
               cardList.value[cardOne.position].visible = false;
               cardList.value[cardTwo.position].visible = false;
