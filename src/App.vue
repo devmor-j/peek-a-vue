@@ -138,8 +138,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  padding-top: 60px;
-  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background-image: url("/public/images/page-bg.png");
   background-color: #00060c;
   color: white;
@@ -147,10 +150,9 @@ body {
 
 .game-board {
   display: grid;
-  /* [ ] avoid pixels in css (use rem) */
-  grid-template-columns: repeat(4, 100px);
-  grid-auto-rows: 100px;
-  gap: 30px;
+  grid-template-columns: repeat(4, 7rem);
+  grid-auto-rows: 7rem;
+  gap: 1.25rem;
   justify-content: center;
 }
 </style>
