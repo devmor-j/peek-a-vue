@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import GameCard from "@/components/GameCard"
 
 export default {
@@ -18,10 +18,29 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
-    const status = ref('');
+    
+    const status = computed(() => {
+      let statusMessage;
+      if (remainingPairs.value === 0) {
+        statusMessage = 'Player wins!'
+      } else {
+        statusMessage = `Remaining pairs: ${remainingPairs.value}`
+      }
+
+      return statusMessage;
+    });
+
+    const remainingPairs = computed(() => {
+      const remainingCards = cardList.value.filter(card => card.matched === false).length;
+
+      // divided by two because of pairs
+      return remainingCards / 2;
+    });
 
     for (let i = 0; i < 16; i++) {
       cardList.value.push({
+        // chnage value to a constant number to test remaining pairs
+        // value: 9,
         value: i,
         visible: false,
         position: i,
@@ -49,12 +68,13 @@ export default {
 
         // compare two cards faceValue
         if (cardOne.faceValue === cardTwo.faceValue) {
-          status.value = 'Match!';
+          // [ ] create a separate messsage for matched/unmatched
+          // status.value = 'Match!';
 
           cardList.value[cardOne.position].matched = true;
           cardList.value[cardTwo.position].matched = true;
         } else {
-          status.value = 'Mismatch!';
+          // status.value = 'Mismatch!';
 
           cardList.value[cardOne.position].visible = false;
           cardList.value[cardTwo.position].visible = false;
