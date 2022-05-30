@@ -1,10 +1,16 @@
 <template>
-  <h1>Peek-a-Vue</h1>
+  <h1 class="visually-hidden">Peek-a-Vue</h1>
+  <img src="../public/images/peek-a-vue-title.png" alt="Peek a vue">
+
   <section class="game-board">
     <GameCard v-for="(card, index) in cardList" :key="`GameCard-${index}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
   </section>
+
   <h2>{{ status }}</h2>
-  <button @click="restartGame">Restart game</button>
+  <button @click="restartGame" class="restart-game">
+    <img src="../public/images/restart.svg" alt="">
+    Restart game
+  </button>
 </template>
 
 <script>
@@ -39,7 +45,7 @@ export default {
       return remainingCards / 2;
     });
 
-    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
+    const cardItems = ['bat', 'candy', 'cauldron', 'cupcake', 'ghost', 'moon', 'pumpkin', 'witch-hat'];
 
     cardItems.forEach((item, index) => {
       cardList.value.push({
@@ -87,10 +93,14 @@ export default {
           cardList.value[cardOne.position].matched = true;
           cardList.value[cardTwo.position].matched = true;
         } else {
-          setTimeout(() => {
-            cardList.value[cardOne.position].visible = false;
-            cardList.value[cardTwo.position].visible = false;
-          }, 1000)
+          // wait some time
+          new Promise((res) => setTimeout(() => {
+            res();
+          }, 500))
+            .then(() => {
+              cardList.value[cardOne.position].visible = false;
+              cardList.value[cardTwo.position].visible = false;
+            })
         }
 
         userSelection.value.length = 0;
@@ -154,5 +164,43 @@ body {
   grid-auto-rows: 7rem;
   gap: 1.25rem;
   justify-content: center;
+  padding-top: 2rem;
+}
+
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.restart-game {
+  padding: 0.75rem 0.875rem;
+  font-size: 1rem;
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  transition-duration: 0.3s;
+  transition-property: color, background-color;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.restart-game:hover {
+  background-color: orange;
+  color: black;
+}
+
+.restart-game:active {
+  background-color: white;
+}
+
+.restart-game:focus-visible:not(:active) {
+  background-color: orangered;
 }
 </style>
