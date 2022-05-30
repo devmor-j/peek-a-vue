@@ -38,9 +38,9 @@ export default {
 <template>
   <div class="card" @click="selectCard" :style="{ cursor: matched ? 'not-allowed' : 'pointer' }">
 
-    <div v-if="visible" class="card-face is-front">
-      <img :src="`/images/${value}.png`" :alt="value">
-      <img v-if="matched" class="icon-checkmark" src="/images/checkmark.svg" alt="">
+    <div v-if="visible" class="card-face is-front" :class="{ 'scale-down': matched }">
+      <img :src="`/images/${value}.png`" :alt="value" draggable="false">
+      <img v-if="matched" class="icon-checkmark" src="/images/checkmark.svg" alt="" draggable="false">
     </div>
 
     <div v-else class="card-face is-back"></div>
@@ -61,6 +61,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .card-face.is-front {
@@ -79,5 +80,26 @@ export default {
   opacity: 0.8;
   bottom: 0.2rem;
   right: 0.2rem;
+}
+
+.scale-down {
+  transition-duration: 0.2s;
+  transition-property: filter, transform;
+  filter: grayscale(0);
+  transform: scale(1);
+}
+
+.scale-down:active {
+  filter: grayscale(1);
+  transform: scale(0.975);
+}
+
+.scale-down:active::after {
+  content: "Already matched!";
+  position: absolute;
+  background-color: #0008;
+  font-size: 0.875rem;
+  font-weight: normal;
+  top: 0;
 }
 </style>
