@@ -4,9 +4,11 @@
     <GameCard v-for="(card, index) in cardList" :key="`GameCard-${index}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
   </section>
   <h2>{{ status }}</h2>
+  <button @click="shuffleCards">Shuffle cards</button>
 </template>
 
 <script>
+import shuffle from 'lodash/shuffle';
 import { ref, watch, computed } from 'vue';
 import GameCard from "@/components/GameCard"
 
@@ -18,7 +20,7 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
-    
+
     const status = computed(() => {
       let statusMessage;
       if (remainingPairs.value === 0) {
@@ -86,12 +88,16 @@ export default {
       }
     }, { deep: true })
 
+    function shuffleCards() {
+      cardList.value = shuffle(cardList.value);
+    }
 
     return {
       cardList,
       flipCard,
       userSelection,
       status,
+      shuffleCards,
     };
   }
 
