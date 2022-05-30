@@ -75,7 +75,9 @@ export default {
 
 .icon-checkmark {
   position: absolute;
-  bottom: 0.25rem;
-  right: 0.25rem;
+  transform: scale(0.8);
+  opacity: 0.8;
+  bottom: 0.2rem;
+  right: 0.2rem;
 }
 </style>
