@@ -38,10 +38,10 @@ export default {
   <div class="card" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
       <h3>{{ matched }}</h3>
-      {{ value }}: front
+      {{ value }}: front {{ position }}
     </div>
     <div v-else class="card-face is-back">
-      {{ value }}: back
+      {{ value }}: back {{ position }}
     </div>
   </div>
 </template>

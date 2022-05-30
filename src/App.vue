@@ -39,16 +39,24 @@ export default {
       return remainingCards / 2;
     });
 
-    for (let i = 0; i < 16; i++) {
+    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
+
+    cardItems.forEach((item, index) => {
       cardList.value.push({
-        // chnage value to a constant number to test remaining pairs
-        // value: 9,
-        value: i,
+        value: item,
         visible: false,
-        position: i,
+        position: (2 * index),
         matched: false,
       });
-    }
+
+      // second item of the pair
+      cardList.value.push({
+        value: item,
+        visible: false,
+        position: (2 * index) + 1,
+        matched: false,
+      });
+    })
 
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true;
