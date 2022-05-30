@@ -114,7 +114,8 @@ export default {
       }
     }, { deep: true })
 
-    function shuffleCards() {
+    function restartGame() {
+      userSelection.value.length = 0;
       cardList.value = shuffle(cardList.value);
     }
 
