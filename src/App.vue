@@ -26,6 +26,7 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
+    const userShouldWait = ref(false)
 
     const status = computed(() => {
       let statusMessage;
@@ -65,7 +66,7 @@ export default {
     })
 
     const flipCard = (payload) => {
-      console.log(payload)
+      if (userShouldWait.value) return;
       cardList.value[payload.position].visible = true;
 
       // if user has selected one card add next selection
@@ -93,13 +94,17 @@ export default {
           cardList.value[cardOne.position].matched = true;
           cardList.value[cardTwo.position].matched = true;
         } else {
-          // wait some time
+          // when user choices are not matched do not flip new card
+          // until setTimeout promise resolves
+          userShouldWait.value = true;
+
           new Promise((res) => setTimeout(() => {
             res();
-          }, 500))
+          }, 300))
             .then(() => {
               cardList.value[cardOne.position].visible = false;
               cardList.value[cardTwo.position].visible = false;
+              userShouldWait.value = false;
             })
         }
 
