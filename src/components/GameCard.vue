@@ -13,7 +13,7 @@ export default {
     },
     // [ ] refactor value prop to faceValue
     value: {
-      type: [String, Number],
+      type: String,
       required: true,
     },
     visible: {
