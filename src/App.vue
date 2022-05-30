@@ -6,7 +6,6 @@
     <GameCard v-for="card in cardList" :key="`${card.value}-${card.variant}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
   </TransitionGroup>
 
-  <h2>{{ status }}</h2>
   <button @click="restartGame" class="restart-game">
     <img src="../public/images/restart.svg" alt="">
     Restart game
@@ -30,18 +29,6 @@ export default {
     const cardList = ref([]);
     const userSelection = ref([]);
     const userShouldWait = ref(false)
-
-    const status = computed(() => {
-      let statusMessage;
-      if (remainingPairs.value === 0) {
-        statusMessage = 'Player wins!'
-        basicCannon();
-      } else {
-        statusMessage = `Remaining pairs: ${remainingPairs.value}`
-      }
-
-      return statusMessage;
-    });
 
     const remainingPairs = computed(() => {
       const remainingCards = cardList.value.filter(card => card.matched === false).length;
@@ -118,6 +105,12 @@ export default {
       }
     }, { deep: true })
 
+    watch(remainingPairs, (currentValue) => {
+      if (currentValue === 0) {
+        basicCannon();
+      }
+    })
+
     function restartGame() {
       userSelection.value.length = 0;
       cardList.value = shuffle(cardList.value);
@@ -136,7 +129,6 @@ export default {
       cardList,
       flipCard,
       userSelection,
-      status,
       restartGame,
     };
   }
