@@ -6,7 +6,7 @@
     <GameCard v-for="card in cardList" :key="`${card.value}-${card.variant}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
   </TransitionGroup>
 
-  <button @click="restartGame" class="restart-game">
+  <button @click="restartGame" class="restart-game" :class="remainingPairs === 0 ? 'game-finished' : ''">
     <img src="../public/images/restart.svg" alt="">
     Restart game
   </button>
@@ -130,6 +130,7 @@ export default {
       flipCard,
       userSelection,
       restartGame,
+      remainingPairs,
     };
   }
 
@@ -202,6 +203,10 @@ body {
 
 .restart-game:focus-visible:not(:active) {
   background-color: orangered;
+}
+
+.restart-game.game-finished {
+  background-color: green;
 }
 
 .shuffle-transition {
