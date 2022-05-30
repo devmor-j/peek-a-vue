@@ -59,12 +59,18 @@ export default {
     })
 
     const flipCard = (payload) => {
+      console.log(payload)
       cardList.value[payload.position].visible = true;
 
       // if user has selected one card add next selection
       if (userSelection.value[0] ?? false) {
-        // set the last (2/2) card to user's choices
-        userSelection.value[1] = payload;
+        // fix a bug that allows to pair a card with itself
+        if (userSelection.value[0].position === payload.position) {
+          return
+        } else {
+          // set the last (2/2) card to user's choices
+          userSelection.value[1] = payload;
+        }
       } else {
         // set the first (1/2) card to user's choices
         userSelection.value[0] = payload;
@@ -78,21 +84,14 @@ export default {
 
         // compare two cards faceValue
         if (cardOne.faceValue === cardTwo.faceValue) {
-          // [ ] create a separate messsage for matched/unmatched
-          // status.value = 'Match!';
-
           cardList.value[cardOne.position].matched = true;
           cardList.value[cardTwo.position].matched = true;
         } else {
-          // status.value = 'Mismatch!';
-          // [ ] fix 0.5 remaining pairs bug when card is paired with itself
           setTimeout(() => {
             cardList.value[cardOne.position].visible = false;
             cardList.value[cardTwo.position].visible = false;
           }, 1000)
         }
-
-
 
         userSelection.value.length = 0;
       }
