@@ -11,6 +11,8 @@
     <img src="../public/images/restart.svg" alt="">
     Restart game
   </button>
+  <!-- [ ] use waiting time as game level so lower waiting times are harder -->
+  <!-- <input type="range" step="50" min="0" max="1000"> -->
 </template>
 
 <script>
