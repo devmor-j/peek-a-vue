@@ -85,9 +85,11 @@ export default {
           cardList.value[cardTwo.position].matched = true;
         } else {
           // status.value = 'Mismatch!';
-
-          cardList.value[cardOne.position].visible = false;
-          cardList.value[cardTwo.position].visible = false;
+          // [ ] fix 0.5 remaining pairs bug when card is paired with itself
+          setTimeout(() => {
+            cardList.value[cardOne.position].visible = false;
+            cardList.value[cardTwo.position].visible = false;
+          }, 1000)
         }
 
 
