@@ -1,6 +1,6 @@
 # Peek a Vue
 
-Classic card matching game build with [Vue 3](https://vuejs.org/).
+Classic card matching game built with [Vue 3](https://vuejs.org/).
 
 ![Preview (gif)](./screenshot/peek-a-vue.gif)
 
@@ -29,7 +29,7 @@ npx degit https://github.com/devmor-j/peek-a-vue.git
 
 then install dependencies with your package manager:
 
-```
+```sh
 npm install
 ```
 
