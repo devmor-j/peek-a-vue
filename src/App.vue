@@ -6,7 +6,11 @@
     <GameCard v-for="card in cardList" :key="`${card.value}-${card.variant}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
   </TransitionGroup>
 
-  <button @click="restartGame" class="restart-game" :class="remainingPairs === 0 ? 'game-finished' : ''">
+  <button v-if="!isPlaying" @click="startGame" class="game-button play-button" :class="isPlaying === false ? 'button-anime' : ''">
+    <img src="../public/images/play.svg" alt="">
+    Start game
+  </button>
+  <button v-else @click="restartGame" class="game-button" :class="remainingPairs === 0 ? 'button-anime' : ''">
     <img src="../public/images/restart.svg" alt="">
     Restart game
   </button>
@@ -29,6 +33,7 @@ export default {
     const cardList = ref([]);
     const userSelection = ref([]);
     const userShouldWait = ref(false)
+    const isPlaying = ref(false)
 
     const remainingPairs = computed(() => {
       const remainingCards = cardList.value.filter(card => card.matched === false).length;
@@ -43,7 +48,7 @@ export default {
       cardList.value.push({
         value: item,
         variant: 1,
-        visible: false,
+        visible: true,
         position: (2 * index),
         matched: false,
       });
@@ -59,7 +64,7 @@ export default {
     })
 
     const flipCard = (payload) => {
-      if (userShouldWait.value) return;
+      if (userShouldWait.value || !isPlaying.value) return;
       cardList.value[payload.position].visible = true;
 
       // if user has selected one card add next selection
@@ -125,12 +130,20 @@ export default {
       })
     }
 
+    function startGame() {
+      isPlaying.value = true;
+
+      restartGame();
+    }
+
     return {
       cardList,
       flipCard,
       userSelection,
       restartGame,
       remainingPairs,
+      isPlaying,
+      startGame,
     };
   }
 
@@ -177,7 +190,7 @@ body {
   width: 1px;
 }
 
-.restart-game {
+.game-button {
   padding: 0.75rem 0.875rem;
   font-size: 1rem;
   background-color: transparent;
@@ -192,24 +205,24 @@ body {
   cursor: pointer;
 }
 
-.restart-game:hover {
+.game-button:hover {
   background-color: orange;
   color: black;
 }
 
-.restart-game:active {
+.game-button:active {
   background-color: white;
 }
 
-.restart-game:focus-visible:not(:active) {
+.game-button:focus-visible:not(:active) {
   background-color: orangered;
 }
 
-.restart-game.game-finished:not(:hover) {
-  animation: game-finished 2s 5 alternate ease-in-out;
+.game-button.button-anime:not(:hover) {
+  animation: button-anime 2s 10 alternate ease-in-out;
 }
 
-@keyframes game-finished {
+@keyframes button-anime {
   0% {
     background-color: transparent;
   }
