@@ -21,7 +21,7 @@
 <script>
 import shuffle from 'lodash/shuffle';
 import { basicCannon } from './utilities/confetti';
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import GameCard from "@/components/GameCard"
 
 export default {
@@ -29,6 +29,8 @@ export default {
   components: {
     GameCard,
   },
+
+
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
@@ -48,7 +50,7 @@ export default {
       cardList.value.push({
         value: item,
         variant: 1,
-        visible: true,
+        visible: false,
         position: (2 * index),
         matched: false,
       });
@@ -135,6 +137,16 @@ export default {
 
       restartGame();
     }
+
+    onMounted(() => {
+      cardList.value = cardList.value.map((card) => {
+        return {
+          ...card,
+          // make visible half of the cards
+          visible: card.variant === 1 ? true : false,
+        }
+      })
+    })
 
     return {
       cardList,
