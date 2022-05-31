@@ -47,7 +47,7 @@ export default {
 <template>
   <div class="card" :class="flippedStyles" @click="selectCard" :style="{ cursor: matched ? 'not-allowed' : 'pointer' }">
 
-    <div v-if="visible" class="card-face is-front" :class="{ 'scale-down': matched }">
+    <div v-if="visible" class="card-face is-front" :class="{ 'already-matched': matched }">
       <img :src="`/images/${value}.png`" :alt="value" draggable="false">
       <img v-if="matched" class="icon-checkmark" src="/images/checkmark.svg" alt="" draggable="false">
     </div>
@@ -80,6 +80,20 @@ export default {
   user-select: none;
 }
 
+.card-face {
+  transition-duration: 0.2s;
+  transition-property: transform;
+  transform: scale(1);
+}
+
+.card-face:hover {
+  transform: scale(0.95);
+}
+
+.card-face:active {
+  transform: scale(0.9);
+}
+
 .card-face.is-front {
   background-image: url("/public/images/card-bg.png");
   color: white;
@@ -98,19 +112,17 @@ export default {
   right: 0.2rem;
 }
 
-.scale-down {
+.already-matched {
   transition-duration: 0.2s;
-  transition-property: filter, transform;
+  transition-property: filter;
   filter: grayscale(0);
-  transform: scale(1);
 }
 
-.scale-down:active {
+.already-matched:active {
   filter: grayscale(1);
-  transform: scale(0.975);
 }
 
-.scale-down:active::after {
+.already-matched:active::after {
   content: "Already matched!";
   position: absolute;
   background-color: #0008;
