@@ -205,8 +205,18 @@ body {
   background-color: orangered;
 }
 
-.restart-game.game-finished {
-  background-color: green;
+.restart-game.game-finished:not(:hover) {
+  animation: game-finished 2s 5 alternate ease-in-out;
+}
+
+@keyframes game-finished {
+  0% {
+    background-color: transparent;
+  }
+
+  100% {
+    background-color: green;
+  }
 }
 
 .shuffle-transition {
