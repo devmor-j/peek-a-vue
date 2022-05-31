@@ -24,6 +24,12 @@ import { basicCannon } from './utilities/confetti';
 import { ref, watch, computed, onMounted } from 'vue';
 import GameCard from "@/components/GameCard"
 
+// [ ] show how many choices player has made
+// minimum total choices must be 4*4=16
+
+// [ ] when player choices surpass a certain number like 10
+// and all choices were unsuccessful then show a card hint to player
+
 export default {
   name: 'App',
   components: {
