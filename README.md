@@ -1,6 +1,6 @@
-# peek-a-vue
+# Peek a Vue
 
-Classic cards game build with [Vue 3](https://vuejs.org/).
+Classic card matching game build with [Vue 3](https://vuejs.org/).
 
 ![Preview (gif)](./screenshot/peek-a-vue.gif)
 
@@ -21,7 +21,7 @@ Either clone this repo:
 git clone https://github.com/devmor-j/peek-a-vue.git
 ```
  
-or use [degit](https://github.com/Rich-Harris/degit) to only get the lastest commit:
+or use [degit](https://github.com/Rich-Harris/degit) to only get the lastest of branch *main*:
 
 ```sh
 npx degit https://github.com/devmor-j/peek-a-vue.git
@@ -33,26 +33,18 @@ then install dependencies with your package manager:
 npm install
 ```
 
-## Vue cli usage
+## Scripts (based on vue-cli)
 
-### Compiles and hot-reloads for development
+- Compiles and hot-reloads for development:
 
-```
-npm run serve
-```
+  `npm run serve`
 
-### Compiles and minifies for production
+- Compiles and minifies for production:
 
-```
-npm run build
-```
+  `npm run build`
 
-### Lints and fixes files
+- Lints and fixes files:
 
-```
-npm run lint
-```
+  `npm run lint`
 
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+To customize configurations See [Configuration Reference](https://cli.vuejs.org/config/).
