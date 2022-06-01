@@ -1,12 +1,11 @@
-import shuffle from 'lodash/shuffle';
-import { basicCannon } from '../utilities/confetti';
+import shuffle from "lodash/shuffle";
+import { basicCannon } from "../utilities/confetti";
 import { ref, computed, watch } from "vue";
 
 export default function createGame(deck) {
   const isPlaying = ref(false);
   const userSelection = ref([]);
-  const userShouldWait = ref(false)
-
+  const userShouldWait = ref(false);
 
   function restartGame() {
     userSelection.value.length = 0;
@@ -18,8 +17,8 @@ export default function createGame(deck) {
         position: index,
         matched: false,
         visible: false,
-      }
-    })
+      };
+    });
   }
 
   function startGame() {
@@ -36,7 +35,7 @@ export default function createGame(deck) {
     if (userSelection.value[0] ?? false) {
       // fix a bug that allows to pair a card with itself
       if (userSelection.value[0].position === payload.position) {
-        return
+        return;
       } else {
         // set the last (2/2) card to user's choices
         userSelection.value[1] = payload;
@@ -45,10 +44,12 @@ export default function createGame(deck) {
       // set the first (1/2) card to user's choices
       userSelection.value[0] = payload;
     }
-  }
+  };
 
   const remainingPairs = computed(() => {
-    const remainingCards = deck.value.filter(card => card.matched === false).length;
+    const remainingCards = deck.value.filter(
+      (card) => card.matched === false
+    ).length;
 
     // divided by two because of pairs
     return remainingCards / 2;
@@ -60,33 +61,38 @@ export default function createGame(deck) {
     }
   });
 
-  watch(userSelection, (currentValue) => {
-    if (currentValue.length === 2) {
-      // extract user's two selected cards
-      const [cardOne, cardTwo] = currentValue;
+  watch(
+    userSelection,
+    (currentValue) => {
+      if (currentValue.length === 2) {
+        // extract user's two selected cards
+        const [cardOne, cardTwo] = currentValue;
 
-      // compare two cards faceValue
-      if (cardOne.faceValue === cardTwo.faceValue) {
-        deck.value[cardOne.position].matched = true;
-        deck.value[cardTwo.position].matched = true;
-      } else {
-        // when user choices are not matched do not flip new card
-        // until setTimeout promise resolves
-        userShouldWait.value = true;
+        // compare two cards faceValue
+        if (cardOne.faceValue === cardTwo.faceValue) {
+          deck.value[cardOne.position].matched = true;
+          deck.value[cardTwo.position].matched = true;
+        } else {
+          // when user choices are not matched do not flip new card
+          // until setTimeout promise resolves
+          userShouldWait.value = true;
 
-        new Promise((res) => setTimeout(() => {
-          res();
-        }, 500))
-          .then(() => {
+          new Promise((res) =>
+            setTimeout(() => {
+              res();
+            }, 500)
+          ).then(() => {
             deck.value[cardOne.position].visible = false;
             deck.value[cardTwo.position].visible = false;
             userShouldWait.value = false;
-          })
-      }
+          });
+        }
 
-      userSelection.value.length = 0;
-    }
-  }, { deep: true })
+        userSelection.value.length = 0;
+      }
+    },
+    { deep: true }
+  );
 
   return {
     isPlaying,
@@ -96,5 +102,5 @@ export default function createGame(deck) {
     restartGame,
     flipCard,
     remainingPairs,
-  }
+  };
 }

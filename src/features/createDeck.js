@@ -8,7 +8,7 @@ const initDeck = (deckData) => {
       value: item,
       variant: 1,
       visible: false,
-      position: (2 * index),
+      position: 2 * index,
       matched: false,
     });
 
@@ -17,16 +17,16 @@ const initDeck = (deckData) => {
       value: item,
       variant: 2,
       visible: false,
-      position: (2 * index) + 1,
+      position: 2 * index + 1,
       matched: false,
     });
-  })
-}
+  });
+};
 
 export default function createDeck(deckData) {
   initDeck(deckData);
 
   return {
     cardList,
-  }
+  };
 }

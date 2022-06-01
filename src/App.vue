@@ -1,9 +1,9 @@
 <script>
-import { onMounted } from 'vue';
-import GameCard from "@/components/GameCard"
-import createDeck from './features/createDeck';
-import createGame from './features/createGame';
-import { halloweenDeck } from './data/halloweenDeck.json'
+import { onMounted } from "vue";
+import GameCard from "@/components/GameCard";
+import createDeck from "./features/createDeck";
+import createGame from "./features/createGame";
+import { halloweenDeck } from "./data/halloweenDeck.json";
 
 // [ ] show how many choices player has made
 // minimum total choices must be 4*4=16
@@ -12,15 +12,22 @@ import { halloweenDeck } from './data/halloweenDeck.json'
 // and all choices were unsuccessful then show a card hint to player
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     GameCard,
   },
 
   setup() {
-
     const { cardList } = createDeck(halloweenDeck);
-    const { isPlaying, userSelection, startGame, restartGame, remainingPairs, userShouldWait, flipCard } = createGame(cardList);
+    const {
+      isPlaying,
+      userSelection,
+      startGame,
+      restartGame,
+      remainingPairs,
+      userShouldWait,
+      flipCard,
+    } = createGame(cardList);
 
     onMounted(() => {
       cardList.value = cardList.value.map((card) => {
@@ -28,9 +35,9 @@ export default {
           ...card,
           // make visible half of the cards
           visible: card.variant === 1 ? true : false,
-        }
-      })
-    })
+        };
+      });
+    });
 
     return {
       cardList,
@@ -42,25 +49,42 @@ export default {
       startGame,
       userShouldWait,
     };
-  }
-
-}
+  },
+};
 </script>
 
 <template>
   <h1 class="visually-hidden">Peek-a-Vue</h1>
-  <img src="../public/images/peek-a-vue-title.png" alt="Peek a vue">
+  <img src="../public/images/peek-a-vue-title.png" alt="Peek a vue" />
 
   <TransitionGroup tag="section" name="shuffle-transition" class="game-board">
-    <GameCard v-for="card in cardList" :key="`${card.value}-${card.variant}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
+    <GameCard
+      v-for="card in cardList"
+      :key="`${card.value}-${card.variant}`"
+      :value="card.value"
+      :visible="card.visible"
+      :position="card.position"
+      :matched="card.matched"
+      @select-card="flipCard"
+    />
   </TransitionGroup>
 
-  <button v-if="!isPlaying" @click="startGame" class="game-button play-button" :class="isPlaying === false ? 'button-anime' : ''">
-    <img src="../public/images/play.svg" alt="">
+  <button
+    v-if="!isPlaying"
+    @click="startGame"
+    class="game-button play-button"
+    :class="isPlaying === false ? 'button-anime' : ''"
+  >
+    <img src="../public/images/play.svg" alt="" />
     Start game
   </button>
-  <button v-else @click="restartGame" class="game-button" :class="remainingPairs === 0 ? 'button-anime' : ''">
-    <img src="../public/images/restart.svg" alt="">
+  <button
+    v-else
+    @click="restartGame"
+    class="game-button"
+    :class="remainingPairs === 0 ? 'button-anime' : ''"
+  >
+    <img src="../public/images/restart.svg" alt="" />
     Restart game
   </button>
   <!-- [ ] use waiting time as game level so lower waiting times are harder -->
