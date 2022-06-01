@@ -3,6 +3,7 @@ import shuffle from 'lodash/shuffle';
 import { basicCannon } from './utilities/confetti';
 import { ref, watch, computed, onMounted } from 'vue';
 import GameCard from "@/components/GameCard"
+import createDeck from './features/createDeck';
 
 // [ ] show how many choices player has made
 // minimum total choices must be 4*4=16
@@ -18,7 +19,8 @@ export default {
 
 
   setup() {
-    const cardList = ref([]);
+    const { cardList } = createDeck();
+
     const userSelection = ref([]);
     const userShouldWait = ref(false)
     const isPlaying = ref(false)
@@ -29,27 +31,6 @@ export default {
       // divided by two because of pairs
       return remainingCards / 2;
     });
-
-    const cardItems = ['bat', 'candy', 'cauldron', 'cupcake', 'ghost', 'moon', 'pumpkin', 'witch-hat'];
-
-    cardItems.forEach((item, index) => {
-      cardList.value.push({
-        value: item,
-        variant: 1,
-        visible: false,
-        position: (2 * index),
-        matched: false,
-      });
-
-      // second item of the pair
-      cardList.value.push({
-        value: item,
-        variant: 2,
-        visible: false,
-        position: (2 * index) + 1,
-        matched: false,
-      });
-    })
 
     const flipCard = (payload) => {
       if (userShouldWait.value || !isPlaying.value) return;
