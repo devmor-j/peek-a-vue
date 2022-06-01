@@ -1,11 +1,9 @@
 <script>
-import shuffle from 'lodash/shuffle';
-import { basicCannon } from './utilities/confetti';
-import { ref, watch, computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import GameCard from "@/components/GameCard"
 import createDeck from './features/createDeck';
+import createGame from './features/createGame';
 import { halloweenDeck } from './data/halloweenDeck.json'
-
 
 // [ ] show how many choices player has made
 // minimum total choices must be 4*4=16
@@ -19,93 +17,10 @@ export default {
     GameCard,
   },
 
-
   setup() {
+
     const { cardList } = createDeck(halloweenDeck);
-
-    const userSelection = ref([]);
-    const userShouldWait = ref(false)
-    const isPlaying = ref(false)
-
-    const remainingPairs = computed(() => {
-      const remainingCards = cardList.value.filter(card => card.matched === false).length;
-
-      // divided by two because of pairs
-      return remainingCards / 2;
-    });
-
-    const flipCard = (payload) => {
-      if (userShouldWait.value || !isPlaying.value) return;
-      cardList.value[payload.position].visible = true;
-
-      // if user has selected one card add next selection
-      if (userSelection.value[0] ?? false) {
-        // fix a bug that allows to pair a card with itself
-        if (userSelection.value[0].position === payload.position) {
-          return
-        } else {
-          // set the last (2/2) card to user's choices
-          userSelection.value[1] = payload;
-        }
-      } else {
-        // set the first (1/2) card to user's choices
-        userSelection.value[0] = payload;
-      }
-    }
-
-    watch(userSelection, (currentValue) => {
-      if (currentValue.length === 2) {
-        // extract user's two selected cards
-        const [cardOne, cardTwo] = currentValue;
-
-        // compare two cards faceValue
-        if (cardOne.faceValue === cardTwo.faceValue) {
-          cardList.value[cardOne.position].matched = true;
-          cardList.value[cardTwo.position].matched = true;
-        } else {
-          // when user choices are not matched do not flip new card
-          // until setTimeout promise resolves
-          userShouldWait.value = true;
-
-          new Promise((res) => setTimeout(() => {
-            res();
-          }, 500))
-            .then(() => {
-              cardList.value[cardOne.position].visible = false;
-              cardList.value[cardTwo.position].visible = false;
-              userShouldWait.value = false;
-            })
-        }
-
-        userSelection.value.length = 0;
-      }
-    }, { deep: true })
-
-    watch(remainingPairs, (currentValue) => {
-      if (currentValue === 0) {
-        basicCannon();
-      }
-    })
-
-    function restartGame() {
-      userSelection.value.length = 0;
-      cardList.value = shuffle(cardList.value);
-
-      cardList.value = cardList.value.map((card, index) => {
-        return {
-          ...card,
-          position: index,
-          matched: false,
-          visible: false,
-        }
-      })
-    }
-
-    function startGame() {
-      isPlaying.value = true;
-
-      restartGame();
-    }
+    const { isPlaying, userSelection, startGame, restartGame, remainingPairs, userShouldWait, flipCard } = createGame(cardList);
 
     onMounted(() => {
       cardList.value = cardList.value.map((card) => {
@@ -125,6 +40,7 @@ export default {
       remainingPairs,
       isPlaying,
       startGame,
+      userShouldWait,
     };
   }
 
