@@ -4,6 +4,8 @@ import { basicCannon } from './utilities/confetti';
 import { ref, watch, computed, onMounted } from 'vue';
 import GameCard from "@/components/GameCard"
 import createDeck from './features/createDeck';
+import { halloweenDeck } from './data/halloweenDeck.json'
+
 
 // [ ] show how many choices player has made
 // minimum total choices must be 4*4=16
@@ -19,7 +21,7 @@ export default {
 
 
   setup() {
-    const { cardList } = createDeck();
+    const { cardList } = createDeck(halloweenDeck);
 
     const userSelection = ref([]);
     const userShouldWait = ref(false)

@@ -2,8 +2,6 @@ import { ref } from "vue";
 
 const cardList = ref([]);
 
-const cardItems = ['bat', 'candy', 'cauldron', 'cupcake', 'ghost', 'moon', 'pumpkin', 'witch-hat'];
-
 const initDeck = (deckData) => {
   deckData.forEach((item, index) => {
     cardList.value.push({
@@ -25,8 +23,8 @@ const initDeck = (deckData) => {
   })
 }
 
-export default function createDeck() {
-  initDeck(cardItems);
+export default function createDeck(deckData) {
+  initDeck(deckData);
 
   return {
     cardList,
