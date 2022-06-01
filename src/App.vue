@@ -1,23 +1,3 @@
-<template>
-  <h1 class="visually-hidden">Peek-a-Vue</h1>
-  <img src="../public/images/peek-a-vue-title.png" alt="Peek a vue">
-
-  <TransitionGroup tag="section" name="shuffle-transition" class="game-board">
-    <GameCard v-for="card in cardList" :key="`${card.value}-${card.variant}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
-  </TransitionGroup>
-
-  <button v-if="!isPlaying" @click="startGame" class="game-button play-button" :class="isPlaying === false ? 'button-anime' : ''">
-    <img src="../public/images/play.svg" alt="">
-    Start game
-  </button>
-  <button v-else @click="restartGame" class="game-button" :class="remainingPairs === 0 ? 'button-anime' : ''">
-    <img src="../public/images/restart.svg" alt="">
-    Restart game
-  </button>
-  <!-- [ ] use waiting time as game level so lower waiting times are harder -->
-  <!-- <input type="range" step="50" min="0" max="1000"> -->
-</template>
-
 <script>
 import shuffle from 'lodash/shuffle';
 import { basicCannon } from './utilities/confetti';
@@ -167,6 +147,26 @@ export default {
 
 }
 </script>
+
+<template>
+  <h1 class="visually-hidden">Peek-a-Vue</h1>
+  <img src="../public/images/peek-a-vue-title.png" alt="Peek a vue">
+
+  <TransitionGroup tag="section" name="shuffle-transition" class="game-board">
+    <GameCard v-for="card in cardList" :key="`${card.value}-${card.variant}`" :value="card.value" :visible="card.visible" :position="card.position" :matched="card.matched" @select-card="flipCard" />
+  </TransitionGroup>
+
+  <button v-if="!isPlaying" @click="startGame" class="game-button play-button" :class="isPlaying === false ? 'button-anime' : ''">
+    <img src="../public/images/play.svg" alt="">
+    Start game
+  </button>
+  <button v-else @click="restartGame" class="game-button" :class="remainingPairs === 0 ? 'button-anime' : ''">
+    <img src="../public/images/restart.svg" alt="">
+    Restart game
+  </button>
+  <!-- [ ] use waiting time as game level so lower waiting times are harder -->
+  <!-- <input type="range" step="50" min="0" max="1000"> -->
+</template>
 
 <style>
 body {
