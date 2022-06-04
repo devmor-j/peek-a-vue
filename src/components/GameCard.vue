@@ -70,7 +70,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .card {
   position: relative;
   transition-property: transform;

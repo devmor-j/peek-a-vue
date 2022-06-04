@@ -1,6 +1,7 @@
 <script>
 import { onMounted } from "vue";
 import GameCard from "@/components/GameCard";
+import GameButton from "@/components/GameButton";
 import createDeck from "./features/createDeck";
 import createGame from "./features/createGame";
 import { halloweenDeck } from "./data/halloweenDeck.json";
@@ -15,17 +16,18 @@ export default {
   name: "App",
   components: {
     GameCard,
+    GameButton,
   },
 
   setup() {
     const { cardList } = createDeck(halloweenDeck);
     const {
       isPlaying,
-      userSelection,
-      startGame,
+      playerSelection,
+      startNewGame,
       restartGame,
       remainingPairs,
-      userShouldWait,
+      playerShouldWait,
       flipCard,
     } = createGame(cardList);
 
@@ -42,12 +44,12 @@ export default {
     return {
       cardList,
       flipCard,
-      userSelection,
+      playerSelection,
       restartGame,
       remainingPairs,
       isPlaying,
-      startGame,
-      userShouldWait,
+      startNewGame,
+      playerShouldWait,
     };
   },
 };
@@ -55,7 +57,7 @@ export default {
 
 <template>
   <h1 class="visually-hidden">Peek-a-Vue</h1>
-  <img src="../public/images/peek-a-vue-title.png" alt="Peek a vue" />
+  <img src="/images/peek-a-vue-title.png" alt="Peek a vue" />
 
   <TransitionGroup tag="section" name="shuffle-transition" class="game-board">
     <GameCard
@@ -69,24 +71,12 @@ export default {
     />
   </TransitionGroup>
 
-  <button
-    v-if="!isPlaying"
-    @click="startGame"
-    class="game-button play-button"
-    :class="isPlaying === false ? 'button-anime' : ''"
-  >
-    <img src="../public/images/play.svg" alt="" />
-    Start game
-  </button>
-  <button
-    v-else
-    @click="restartGame"
-    class="game-button"
-    :class="remainingPairs === 0 ? 'button-anime' : ''"
-  >
-    <img src="../public/images/restart.svg" alt="" />
-    Restart game
-  </button>
+  <GameButton
+    :isPlaying="isPlaying"
+    @start-new-game="startNewGame"
+    @restart-game="restartGame"
+  />
+
   <!-- [ ] use waiting time as game level so lower waiting times are harder -->
   <!-- <input type="range" step="50" min="0" max="1000"> -->
 </template>
@@ -129,48 +119,6 @@ body {
   position: absolute;
   white-space: nowrap;
   width: 1px;
-}
-
-.game-button {
-  padding: 0.75rem 0.875rem;
-  font-size: 1rem;
-  background-color: transparent;
-  color: white;
-  border: 1px solid white;
-  transition-duration: 0.3s;
-  transition-property: color, background-color;
-  border-radius: 0.25rem;
-  display: flex;
-  align-items: center;
-  column-gap: 0.5rem;
-  cursor: pointer;
-}
-
-.game-button:hover {
-  background-color: orange;
-  color: black;
-}
-
-.game-button:active {
-  background-color: white;
-}
-
-.game-button:focus-visible:not(:active) {
-  background-color: orangered;
-}
-
-.game-button.button-anime:not(:hover) {
-  animation: button-anime 2s 10 alternate ease-in-out;
-}
-
-@keyframes button-anime {
-  0% {
-    background-color: transparent;
-  }
-
-  100% {
-    background-color: green;
-  }
 }
 
 .shuffle-transition {
