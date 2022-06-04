@@ -4,7 +4,11 @@ export default {};
 
 <template>
   <h1 class="visually-hidden">Peek-a-Vue</h1>
-  <img src="/images/peek-a-vue-title.png" alt="Peek a vue" />
+  <img
+    class="title-image"
+    src="/images/peek-a-vue-title.png"
+    alt="Peek a vue"
+  />
 </template>
 
 <style scoped>
@@ -16,5 +20,14 @@ export default {};
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+.title-image {
+  max-width: 100%;
+}
+
+@media (max-width: 40rem) {
+  .title-image {
+    width: clamp(10rem, 5rem + 30vw, 30rem);
+  }
 }
 </style>

@@ -56,6 +56,13 @@ export default {
   cursor: pointer;
 }
 
+@media (max-width: 40rem) {
+  .game-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
 .game-button:hover {
   background-color: orange;
   color: black;

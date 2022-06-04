@@ -101,13 +101,15 @@ body {
   background-image: url("/public/images/page-bg.png");
   background-color: #00060c;
   color: white;
+  padding-inline: 1rem;
 }
 
 .game-board {
+  --game-card-size: clamp(4rem, 2rem + 12vw, 7rem);
   display: grid;
-  grid-template-columns: repeat(4, 7rem);
-  grid-auto-rows: 7rem;
-  gap: 1.25rem;
+  grid-template-columns: repeat(4, var(--game-card-size));
+  grid-auto-rows: var(--game-card-size);
+  gap: clamp(0.5rem, calc(0.11rem + 1.95vw), 1.5rem);
   justify-content: center;
   padding-block: 2rem;
 }

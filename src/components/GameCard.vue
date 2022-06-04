@@ -56,7 +56,12 @@ export default {
       class="card-face is-front"
       :class="{ 'already-matched': matched }"
     >
-      <img :src="`/images/${value}.png`" :alt="value" draggable="false" />
+      <img
+        class="card-image"
+        :src="`/images/${value}.png`"
+        :alt="value"
+        draggable="false"
+      />
       <img
         v-if="matched"
         class="icon-checkmark"
@@ -76,6 +81,10 @@ export default {
   transition-property: transform;
   transition-duration: 0.5s;
   transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1.125);
+}
+
+.card-image {
+  max-width: 100%;
 }
 
 .card.is-flipped {
